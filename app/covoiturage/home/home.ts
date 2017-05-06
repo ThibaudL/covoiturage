@@ -7,8 +7,8 @@ const template: string = `
                 </md-toolbar>
                 <md-content layout-padding>
                     <div layout="row">
-                        <driver flex></driver>
-                        <covoiturage-map flex></covoiturage-map>
+                        <driver address-selected="$ctrl.addMarker(item)" flex></driver>
+                        <covoiturage-map markers="$ctrl.markers" flex></covoiturage-map>
                     </div>
                 </md-content>
             </div>
@@ -21,15 +21,22 @@ export default class Home {
         controller: Home
     };
 
+    private markers:Array<Object> = [];
+
     public static $inject = ['NgMap'];
-    constructor(NgMap:angular.map.INgMap){
-        NgMap.getMap().then(function(map) {
+
+    constructor(NgMap: angular.map.INgMap) {
+        NgMap.getMap().then(function (map) {
             NgMap.initMap();
-            var center = map.getCenter();
+            const center = map.getCenter();
             google.maps.event.trigger(map, "resize");
             map.setCenter(center);
         });
     }
 
+    addMarker(item): void {
+        this.markers.push(item);
+        this.markers = this.markers.map((item) => item);
+    }
 }
 

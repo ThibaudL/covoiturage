@@ -13,6 +13,7 @@ const template:string = `
             md-input-minlength="2"
             md-input-maxlength="18"
             md-selected-item="$ctrl.selectedItem"
+            md-selected-item-change="$ctrl.itemChanged($ctrl.selectedItem)"
             md-search-text="$ctrl.searchText"
             md-items="item in $ctrl.search($ctrl.searchText)"
             md-item-text="item.properties.label"
@@ -30,12 +31,17 @@ export default class Driver {
     public static readonly selector:string = "driver";
     public static readonly component:Object = {
         template,
-        controller : Driver
+        controller : Driver,
+        bindings : {
+            addressSelected : '&'
+        }
     };
 
+    private addressSelected:Function;
     private driver:DriverModel;
     private adresseService:AdresseDataGouvFrService;
     private results: GeoCodeJSON;
+
 
     public static readonly $inject = [AdresseDataGouvFrService.SERVICE_NAME];
     constructor(adresseService:AdresseDataGouvFrService) {
@@ -48,8 +54,12 @@ export default class Driver {
     search(searchText:string){
         return this.adresseService.search(searchText)
             .then((results) => {
-                this.results = results.data;
+                this.results = results;
                 return this.results.features;
             })
+    }
+
+    itemChanged(item:Object) : void{
+        this.addressSelected({item});
     }
 }

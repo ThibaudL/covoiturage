@@ -26,7 +26,7 @@
     "angular-messages": "1.6.4",
     "angular-sanitize": "1.6.4",
     "ngmap" : "1.18.4",
-    "angular-adresse-data-gouv-fr" : "1.0.1"
+    "angular-adresse-data-gouv-fr" : "1.0.2"
   },
   "devDependencies": {
     "@types/angular": "1.6.15",

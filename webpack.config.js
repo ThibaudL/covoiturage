@@ -1,6 +1,7 @@
 const path = require("path");
 const includes = [
     path.join(__dirname, '/app'),
+    path.join(__dirname, '/types'),
     path.join(__dirname, '/node_modules/angular-adresse-data-gouv-fr')
 ];
 module.exports = {

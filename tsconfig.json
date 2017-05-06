@@ -20,6 +20,7 @@
   },
   "include": [
     "/app",
+    "/types",
     "/node_modules/angular-adresse-data-gouv-fr"
   ],
   "awesomeTypescriptLoaderOptions": {
