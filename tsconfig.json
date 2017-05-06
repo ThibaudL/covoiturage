@@ -18,12 +18,9 @@
       "node"
     ]
   },
-  "exclude": [
-    "node_modules",
-    "dist"
-  ],
   "include": [
-    "/src/**/*"
+    "/app",
+    "/node_modules/angular-adresse-data-gouv-fr"
   ],
   "awesomeTypescriptLoaderOptions": {
     "forkChecker": true,

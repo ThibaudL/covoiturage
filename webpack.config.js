@@ -1,4 +1,8 @@
 const path = require("path");
+const includes = [
+    path.join(__dirname, '/app'),
+    path.join(__dirname, '/node_modules/angular-adresse-data-gouv-fr')
+];
 module.exports = {
     entry: './app/main.ts',
     output: {
@@ -10,7 +14,6 @@ module.exports = {
         rules: [
             {
                 test: /\.ts$/,
-                exclude: [ /node_modules/ ],
                 loader: 'awesome-typescript-loader'
             },
             {
@@ -19,12 +22,7 @@ module.exports = {
             },
             {
                 test: /\.html$/,
-                loader: 'raw-loader',
-                exclude: [ /node_modules/ ]
-            },
-            {
-                test: /\.json$/,
-                loader: 'json-loader'
+                loader: 'raw-loader'
             }
         ]
     },
