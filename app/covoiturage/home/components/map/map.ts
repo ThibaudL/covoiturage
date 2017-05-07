@@ -13,13 +13,23 @@ const template: string = `
              map-lazy-load-params="{{$ctrl.googleMapsUrl}}"        
             >
             <ng-map zoom="13" center="Bois du fief clairet, Ligugé">
-      <custom-marker position="Bois du fief clairet, Ligugé">
-        <div class="mutuelle">
-          <div> Mutuelle de poitiers Assurance</div>
-        </div>
-      </custom-marker>
+              <custom-marker position="Bois du fief clairet, Ligugé"  ng-if="$ctrl.displaySiege">
+                <div class="mutuelle">
+                  <div >Mutuelle de poitiers Assurance</div>
+                </div>
+              </custom-marker>
+              <!--<custom-marker ng-repeat="marker in $ctrl.markers track by $index" position="{{marker.geometry.coordinates}}">-->
+                <!--<div class="mutuelle">-->
+                  <!--<div >Test</div>-->
+                <!--</div>-->
+              <!--</custom-marker>-->
             </ng-map>
         </div>
+    </md-card>
+    <md-card layout="row" layout-align="left center" style="padding-top:15px;padding-left: 15px">
+        <md-checkbox ng-model="$ctrl.displaySiege">
+            Afficher siège
+        </md-checkbox>
     </md-card>
 `;
 export default class Map {
@@ -32,6 +42,7 @@ export default class Map {
         }
     };
 
+    private displaySiege: boolean = true;
     private static googleMapsUrl: string = "https://maps.google.com/maps/api/js?key=" + API_KEY;
 
     private NgMap: INgMap;
