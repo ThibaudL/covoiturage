@@ -4,10 +4,49 @@
     <meta charset="UTF-8">
     <title>Covoiturage</title>
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:400,700'>
-
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-    <home></home>
+<div layout="column" ng-cloak="">
+    <md-toolbar class="md-primary" layout="row" layout-align="space-between center">
+        <div class="md-toolbar-tools">
+            <h2 class="md-flex">Covoiturage</h2>
+        </div>
+        <md-menu-bar flex style="margin-right: 50px;">
+            <md-menu>
+                <button class="md-icon-button" ng-mouseenter="$mdMenu.open()">
+                    <i class="material-icons " style="color: white;">menu</i>
+                </button>
+                <md-menu-content>
+                    <md-menu-item>
+                        <md-button ui-sref="home">
+                            Accueil
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-divider></md-menu-divider>
+                    <md-menu-item>
+                        <md-menu>
+                            <md-button ui-sref="home.drivers">Conducteurs</md-button>
+                            <md-menu-content>
+                                <md-menu-item>
+                                    <md-button ui-sref="home.drivers.add">Ajouter</md-button>
+                                </md-menu-item>
+                                <md-menu-divider></md-menu-divider>
+                                <md-menu-item>
+                                    <md-button ui-sref="home.drivers">Liste</md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </md-menu-item>
+                    </md-menu-item></md-menu-content>
+            </md-menu>
+        </md-menu-bar>
+    </md-toolbar>
+
+    <md-content layout-padding>
+        <div ui-view="content">
+    </md-content>
+</div>
 <script src="http://localhost:8080/dist/bundle.js"></script>
 </body>
 </html>

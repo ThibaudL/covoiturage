@@ -1,5 +1,7 @@
-import {API_KEY} from "../../../../ignore/privateOptions";
+import {API_KEY} from "../../../../../ignore/privateOptions";
 import INgMap = angular.map.INgMap;
+import './map.css';
+
 const template: string = `
     <md-card >
         <md-toolbar class="md-primary">
@@ -10,7 +12,12 @@ const template: string = `
         <div map-lazy-load="https://maps.google.com/maps/api/js"
              map-lazy-load-params="{{$ctrl.googleMapsUrl}}"        
             >
-            <ng-map zoom="9" center="poitier">
+            <ng-map zoom="13" center="Bois du fief clairet, Ligugé">
+      <custom-marker position="Bois du fief clairet, Ligugé">
+        <div class="mutuelle">
+          <div> Mutuelle de poitiers Assurance</div>
+        </div>
+      </custom-marker>
             </ng-map>
         </div>
     </md-card>

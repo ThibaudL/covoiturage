@@ -1,12 +1,15 @@
 const template: string = `
-    <covoiturage-map markers="$ctrl.markers" flex></covoiturage-map>
+    <div layout="row">
+        <driver address-selected="$ctrl.addMarker(item)" flex></driver>
+        <covoiturage-map markers="$ctrl.markers" flex></covoiturage-map>
+    </div>
 `;
 
-export default class Home {
-    public static readonly selector: string = 'home';
+export default class AddDriver {
+    public static readonly selector: string = 'addDriver';
     public static readonly component: Object = {
         template,
-        controller: Home
+        controller: AddDriver
     };
 
     private markers:Array<Object> = [];
