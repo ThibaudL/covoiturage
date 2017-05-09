@@ -35,3 +35,7 @@
     bottom: -7px;
     left: 50%;
 }
+
+md-tooltip {
+    height: auto;
+}

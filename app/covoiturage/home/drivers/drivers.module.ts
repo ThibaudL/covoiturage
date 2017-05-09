@@ -3,7 +3,8 @@ export default angular.module('drivers',[])
         $stateProvider
             .state('home.drivers', {
                 url: '/drivers',
-                template : ''
+                template : '',
+                redirectTo : 'home.drivers.list'
             })
     })
 ;

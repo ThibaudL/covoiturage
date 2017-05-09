@@ -3,19 +3,15 @@ import UserService from "../../services/UserService";
 
 const template: string = `
     <div layout="row">
-        <driver flex
-             on-address-selected="$ctrl.addMarker(item)"
-             on-add="$ctrl.addDriver(driver)"
-        ></driver>
         <covoiturage-map markers="$ctrl.markers" flex></covoiturage-map>
     </div>
 `;
 
-export default class AddDriver {
-    public static readonly selector: string = 'addDriver';
+export default class ListDrivers {
+    public static readonly selector: string = 'listDriver';
     public static readonly component: Object = {
         template,
-        controller: AddDriver
+        controller: ListDrivers
     };
 
     private markers:Array<Object> = [];
@@ -24,9 +20,19 @@ export default class AddDriver {
     public static $inject = [UserService.servicename];
     constructor(userService:UserService) {
         this.userService = userService;
+        console.log("constructor",this.userService.drivers)
+
     }
 
-    addMarker(item): void {
+    $onInit(){
+        console.log("$onInit()",this.userService.drivers)
+        this.userService.drivers.forEach((driver) => {
+            this.addMarker(driver.marker);
+        });
+    }
+
+    addMarker(item:any): void {
+        console.log("adding marker", item);
         this.markers.push(item);
         this.markers = this.markers.map((item) => item);
     }
