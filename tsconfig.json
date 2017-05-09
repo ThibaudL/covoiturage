@@ -21,7 +21,8 @@
   "include": [
     "/app",
     "/types",
-    "/node_modules/angular-adresse-data-gouv-fr"
+    "/node_modules/angular-adresse-data-gouv-fr",
+    "/node_modules/@types"
   ],
   "awesomeTypescriptLoaderOptions": {
     "forkChecker": true,

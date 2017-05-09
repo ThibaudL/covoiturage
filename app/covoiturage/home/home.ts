@@ -1,5 +1,10 @@
 const template: string = `
-    <covoiturage-map markers="$ctrl.markers" flex></covoiturage-map>
+    <div layout="row">
+        <md-card flex>
+        
+        </md-card>
+        <covoiturage-map markers="$ctrl.markers" flex></covoiturage-map>
+    </div>
 `;
 
 export default class Home {

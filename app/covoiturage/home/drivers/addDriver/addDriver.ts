@@ -1,5 +1,6 @@
 import DriverModel from "../../components/driver/DriverModel";
 import UserService from "../../services/UserService";
+import IStateService = ng.ui.IStateService;
 
 const template: string = `
     <div layout="row">
@@ -19,11 +20,14 @@ export default class AddDriver {
     };
 
     private markers:Array<Object> = [];
-    private userService:UserService;
 
-    public static $inject = [UserService.servicename];
-    constructor(userService:UserService) {
+    private userService:UserService;
+    private $state:IStateService;
+
+    public static $inject = [UserService.servicename, '$state'];
+    constructor(userService:UserService, $state:IStateService) {
         this.userService = userService;
+        this.$state = $state;
     }
 
     addMarker(item): void {
@@ -33,6 +37,7 @@ export default class AddDriver {
 
     addDriver(driver:DriverModel):void{
         this.userService.drivers.push(driver);
+        this.$state.go("home.drivers.list");
     }
 }
 

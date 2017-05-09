@@ -3,6 +3,21 @@ import UserService from "../../services/UserService";
 
 const template: string = `
     <div layout="row">
+        <md-card flex>
+            <md-list  flex>
+                <md-list-item class="md-3-line" 
+                    ng-repeat="driver in $ctrl.userService.drivers track by $index">
+                    
+                    <div class="md-list-item-text" layout="row" layout-align="start center">
+                        <i class="material-icons">{{driver.marker.type}}</i>
+                        <h3>
+                            &nbsp;&nbsp;{{ driver.firstname }} {{driver.name}} - {{driver.adresse}}
+                        </p>
+                    </div>
+                    <md-divider ng-if="!$last"></md-divider>
+                </md-list-item>
+            </md-list>
+        </md-card>
         <covoiturage-map markers="$ctrl.markers" flex></covoiturage-map>
     </div>
 `;

@@ -14,7 +14,7 @@ const template: string = `
             >
             <ng-map zoom="13" center="Bois du fief clairet, Ligugé">
               
-              <custom-marker position="Bois du fief clairet, Ligugé"  ng-if="$ctrl.displaySiege">
+              <custom-marker position="[46.539627,0.319984]"  ng-if="$ctrl.displaySiege">
                 <div class="mutuelle">
                     <md-tooltip>Siège - Bois du fief clairet, Ligugé</md-tooltip>
                     <i class="material-icons">business</i>
@@ -56,14 +56,17 @@ export default class Map {
     private static googleMapsUrl: string = "https://maps.google.com/maps/api/js?key=" + API_KEY;
 
     private NgMap: INgMap;
-    private map: google.maps.Map;
     public static readonly $inject = ['NgMap'];
 
     constructor(NgMap: INgMap) {
         this.NgMap = NgMap;
-        NgMap.getMap().then((map: google.maps.Map) => {
-            this.map = map;
-        });
+
+        // this.NgMap.getMap().then((map: google.maps.Map) => {
+        //     const center = map.getCenter();
+        //     google.maps.event.trigger(map, "resize");
+        //     map.setCenter(center);
+        // });
+
     }
 
     $onChanges(changes): void {
@@ -71,19 +74,19 @@ export default class Map {
             changes.markers.currentValue.forEach((geoJson) => {
                 if (geoJson) {
                     // this.map.data.addGeoJson(geoJson);
-                    this.map.panTo(
-                        {
+                    this.NgMap.getMap().then((map: google.maps.Map) => {
+                        map.panTo({
                             lat: geoJson.geometry.coordinates[0],
                             lng: geoJson.geometry.coordinates[1]
-                        }
-                    )
+                        });
+                    });
+
                 }
             });
         }
     }
 
     formatCoordinates(coordinates : Array<number>) : Array<number>{
-        console.log(coordinates.reverse())
         return coordinates.reverse();
     }
 
