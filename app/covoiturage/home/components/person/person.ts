@@ -6,7 +6,7 @@ const template: string = `
     <md-card >
         <md-toolbar class="md-primary">
             <div class="md-toolbar-tools">
-                <h3 class="md-flex">Conducteur</h3>
+                <h3 class="md-flex">Covoitureur</h3>
             </div>
         </md-toolbar>
         <form name="$ctrl.form" ng-submit="$ctrl.submitForm()">
@@ -42,12 +42,6 @@ const template: string = `
             <md-input-container class="md-block">
               <label>E-mail</label>
               <input ng-model="$ctrl.driver.email" type="email">
-            </md-input-container>
-            <md-input-container class="md-block">
-                <i class="material-icons">event_seat</i>
-                <i class="material-icons">event_seat</i>
-                <i class="material-icons">event_seat</i>
-                <i class="material-icons">event_seat</i>
             </md-input-container>
             <div layout="row" layout-align="end center">
                 <md-button type="submit" class="md-primary md-raised">Ajouter</md-button>
