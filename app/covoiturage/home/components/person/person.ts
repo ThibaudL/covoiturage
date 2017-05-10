@@ -1,6 +1,7 @@
-import DriverModel from "./DriverModel";
+import PersonModel from "./PersonModel";
 import AdresseDataGouvFrService from 'angular-adresse-data-gouv-fr/app/adresseDataGouvFr/service/AdresseDataGouvFrService';
 import GeoCodeJSON from 'angular-adresse-data-gouv-fr/app/adresseDataGouvFr/types/GeoCode/GeoCodeJSON';
+import UserService from "../../services/UserService";
 const template: string = `
     <md-card >
         <md-toolbar class="md-primary">
@@ -42,6 +43,12 @@ const template: string = `
               <label>E-mail</label>
               <input ng-model="$ctrl.driver.email" type="email">
             </md-input-container>
+            <md-input-container class="md-block">
+                <i class="material-icons">event_seat</i>
+                <i class="material-icons">event_seat</i>
+                <i class="material-icons">event_seat</i>
+                <i class="material-icons">event_seat</i>
+            </md-input-container>
             <div layout="row" layout-align="end center">
                 <md-button type="submit" class="md-primary md-raised">Ajouter</md-button>
             </div>
@@ -49,11 +56,11 @@ const template: string = `
     </md-card>
 `;
 
-export default class Driver {
-    public static readonly selector: string = "driver";
+export default class Person {
+    public static readonly selector: string = "person";
     public static readonly component: Object = {
         template,
-        controller: Driver,
+        controller: Person,
         bindings: {
             onAddressSelected: '&',
             onAdd: '&'
@@ -62,17 +69,22 @@ export default class Driver {
 
     private onAddressSelected: Function;
     private onAdd: Function;
-    private driver: DriverModel;
-    private adresseService: AdresseDataGouvFrService;
+    private person: PersonModel;
     private results: GeoCodeJSON;
 
+    private adresseService: AdresseDataGouvFrService;
+    private userService: UserService;
+    private $state: ng.ui.IStateService;
 
-    public static readonly $inject = [AdresseDataGouvFrService.SERVICE_NAME];
+    public static readonly $inject = [AdresseDataGouvFrService.SERVICE_NAME, UserService.servicename, '$state'];
 
-    constructor(adresseService: AdresseDataGouvFrService) {
-        this.driver = {};
+    constructor(adresseService: AdresseDataGouvFrService, userService: UserService, $state: ng.ui.IStateService) {
+        this.person = {};
         this.adresseService = adresseService;
+        this.userService = userService;
+        this.$state = $state;
     }
+
 
     search(searchText: string) {
         return this.adresseService.search(searchText)
@@ -84,14 +96,16 @@ export default class Driver {
 
     itemChanged(item: any): void {
         item.geometry.coordinates = item.geometry.coordinates.reverse();
-        this.driver.adresse = item.properties.label;
-        this.driver.marker = item;
-        item.type = "home";
-        item.driver = this.driver;
-        this.onAddressSelected({item});
+        item.type = "arrow_downward";
+        this.person.adresse = item.properties.label;
+        this.person.marker = item;
+        this.userService.persons.push(this.person);
     }
 
     submitForm(): void {
-        this.onAdd({driver: this.driver})
+        this.person.marker.type = 'directions_car';
+        this.$state.go("home.persons.list");
     }
+
+
 }

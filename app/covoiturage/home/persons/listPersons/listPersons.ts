@@ -1,4 +1,4 @@
-import DriverModel from "../../components/driver/DriverModel";
+import PersonModel from "../../components/person/PersonModel";
 import UserService from "../../services/UserService";
 
 const template: string = `
@@ -6,27 +6,26 @@ const template: string = `
         <md-card flex>
             <md-list  flex>
                 <md-list-item class="md-3-line" 
-                    ng-repeat="driver in $ctrl.userService.drivers track by $index">
+                    ng-repeat="person in $ctrl.userService.persons track by $index">
                     
                     <div class="md-list-item-text" layout="row" layout-align="start center">
-                        <i class="material-icons">{{driver.marker.type}}</i>
+                        <i class="material-icons">{{person.marker.type}}</i>
                         <h3>
-                            &nbsp;&nbsp;{{ driver.firstname }} {{driver.name}} - {{driver.adresse}}
+                            &nbsp;&nbsp;{{ person.firstname }} {{person.name}} - {{person.adresse}}
                         </p>
                     </div>
                     <md-divider ng-if="!$last"></md-divider>
                 </md-list-item>
             </md-list>
         </md-card>
-        <covoiturage-map markers="$ctrl.markers" flex></covoiturage-map>
     </div>
 `;
 
-export default class ListDrivers {
-    public static readonly selector: string = 'listDriver';
+export default class ListPersons {
+    public static readonly selector: string = 'listPersons';
     public static readonly component: Object = {
         template,
-        controller: ListDrivers
+        controller: ListPersons
     };
 
     private markers:Array<Object> = [];
@@ -35,14 +34,13 @@ export default class ListDrivers {
     public static $inject = [UserService.servicename];
     constructor(userService:UserService) {
         this.userService = userService;
-        console.log("constructor",this.userService.drivers)
 
     }
 
     $onInit(){
-        console.log("$onInit()",this.userService.drivers)
-        this.userService.drivers.forEach((driver) => {
-            this.addMarker(driver.marker);
+        console.log("$onInit()",this.userService.persons)
+        this.userService.persons.forEach((person) => {
+            this.addMarker(person.marker);
         });
     }
 
@@ -52,8 +50,8 @@ export default class ListDrivers {
         this.markers = this.markers.map((item) => item);
     }
 
-    addDriver(driver:DriverModel):void{
-        this.userService.drivers.push(driver);
+    addDriver(person:PersonModel):void{
+        this.userService.persons.push(person);
     }
 }
 

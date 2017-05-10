@@ -1,12 +1,12 @@
-import DriverModel from "../components/driver/DriverModel";
+import DriverModel from "../components/person/PersonModel";
 export default class UserService {
     public static readonly servicename = "userService";
 
     public static readonly $inject = [];
-    public drivers: Array<DriverModel> = [{
+    public persons: Array<DriverModel> = [{
         firstname: 'jean',
         name: 'jack',
-        adresse: '2 allée traversière',
+        adresse: 'Avenue de Paris',
         marker : {
             geometry: {
                 coordinates: [
@@ -14,7 +14,7 @@ export default class UserService {
                     0.34081
                 ]
             },
-            type : 'home'
+            type : 'directions_walk'
         }
 
     }];

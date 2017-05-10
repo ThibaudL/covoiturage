@@ -1,8 +1,6 @@
 const template: string = `
     <div layout="row">
-        <md-card flex>
-        
-        </md-card>
+        <div ui-view="content" flex></div>
         <covoiturage-map markers="$ctrl.markers" flex></covoiturage-map>
     </div>
 `;
@@ -18,13 +16,8 @@ export default class Home {
 
     public static $inject = ['NgMap'];
 
-    constructor(NgMap: angular.map.INgMap) {
-        NgMap.getMap().then(function (map) {
-            NgMap.initMap();
-            const center = map.getCenter();
-            google.maps.event.trigger(map, "resize");
-            map.setCenter(center);
-        });
+    constructor() {
+
     }
 
     addMarker(item): void {

@@ -1,6 +1,7 @@
 import {API_KEY} from "../../../../../ignore/privateOptions";
 import INgMap = angular.map.INgMap;
 import './map.css';
+import UserService from "../../services/UserService";
 
 const template: string = `
     <md-card >
@@ -12,7 +13,7 @@ const template: string = `
         <div map-lazy-load="https://maps.google.com/maps/api/js"
              map-lazy-load-params="{{$ctrl.googleMapsUrl}}"        
             >
-            <ng-map zoom="13" center="Bois du fief clairet, Ligugé">
+            <ng-map zoom="13" zoom-to-include-markers="auto" center="Bois du fief clairet, Ligugé" style="height:600px">
               
               <custom-marker position="[46.539627,0.319984]"  ng-if="$ctrl.displaySiege">
                 <div class="mutuelle">
@@ -22,14 +23,14 @@ const template: string = `
               </custom-marker>
               
               <custom-marker 
-                  ng-repeat="marker in $ctrl.markers track by $index"
+                  ng-repeat="person in $ctrl.userService.persons track by $index"
                   id="custom-marker-{{$index}}"
                   on-click="$ctrl.map.showInfoWindow('markerInfo', 'custom-marker-'+$index)"
-                  position="{{::marker.geometry.coordinates}}"
+                  position="{{::person.marker.geometry.coordinates}}"
               >
                 <div class="mutuelle">
-                  <md-tooltip>{{marker.driver.firstname}} {{marker.driver.name}} - {{marker.driver.adresse}}</md-tooltip>
-                    <i class="material-icons">{{marker.type}}</i>
+                  <md-tooltip>{{person.firstname}} {{person.name}} - {{person.adresse}}</md-tooltip>
+                    <i class="material-icons">{{person.marker.type}}</i>
                 </div>
               </custom-marker>
             </ng-map>
@@ -50,17 +51,16 @@ export default class Map {
             markers: '<'
         }
     };
-    private markers:Array<any>;
 
     private displaySiege: boolean = true;
     private static googleMapsUrl: string = "https://maps.google.com/maps/api/js?key=" + API_KEY;
 
     private NgMap: INgMap;
-    public static readonly $inject = ['NgMap'];
-
-    constructor(NgMap: INgMap) {
+    private userService:UserService;
+    public static readonly $inject = ['NgMap',UserService.servicename];
+    constructor(NgMap: INgMap,userService:UserService) {
         this.NgMap = NgMap;
-
+        this.userService = userService;
         // this.NgMap.getMap().then((map: google.maps.Map) => {
         //     const center = map.getCenter();
         //     google.maps.event.trigger(map, "resize");
@@ -69,34 +69,8 @@ export default class Map {
 
     }
 
-    $onChanges(changes): void {
-        if (changes.markers.currentValue.length > 0) {
-            changes.markers.currentValue.forEach((geoJson) => {
-                if (geoJson) {
-                    // this.map.data.addGeoJson(geoJson);
-                    this.NgMap.getMap().then((map: google.maps.Map) => {
-                        map.panTo({
-                            lat: geoJson.geometry.coordinates[0],
-                            lng: geoJson.geometry.coordinates[1]
-                        });
-                    });
-
-                }
-            });
-        }
-    }
-
     formatCoordinates(coordinates : Array<number>) : Array<number>{
         return coordinates.reverse();
     }
 
-    toogleDisplay(marker:any) :void{
-        this.markers.forEach((m) => {
-            if(m.properties.x === marker.properties.x && m.properties.y === marker.properties.y){
-                marker.displayMore = !marker.displayMore;
-            }else{
-                marker.displayMore = false;
-            }
-        });
-    }
 }
