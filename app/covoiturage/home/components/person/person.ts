@@ -29,19 +29,19 @@ const template: string = `
             </div>
             <md-input-container class="md-block">
               <label>Prénom</label>
-              <input ng-model="$ctrl.driver.firstname" type="text">
+              <input ng-model="$ctrl.person.firstname" type="text">
             </md-input-container>
             <md-input-container class="md-block">
               <label>Nom</label>
-              <input ng-model="$ctrl.driver.name" type="text">
+              <input ng-model="$ctrl.person.name" type="text">
             </md-input-container>
             <md-input-container  class="md-block">
               <label>Téléphone</label>
-              <input ng-model="$ctrl.driver.phone" type="text" >
+              <input ng-model="$ctrl.person.phone" type="text" >
             </md-input-container>
             <md-input-container class="md-block">
               <label>E-mail</label>
-              <input ng-model="$ctrl.driver.email" type="email">
+              <input ng-model="$ctrl.person.email" type="email">
             </md-input-container>
             <div layout="row" layout-align="end center">
                 <md-button type="submit" class="md-primary md-raised">Ajouter</md-button>
