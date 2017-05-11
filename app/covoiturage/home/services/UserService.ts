@@ -15,8 +15,11 @@ export default class UserService {
                 ]
             },
             type : 'directions_walk'
-        }
+        },
+        type : 'drivee',
+        display : {
 
+        }
     }];
 
     constructor() {

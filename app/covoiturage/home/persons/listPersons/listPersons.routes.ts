@@ -1,4 +1,5 @@
 import ListPersons from "./listPersons";
+import './listPerson.css';
 
 angular.module('covoiturage')
     .component(ListPersons.selector,ListPersons.component)

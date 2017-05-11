@@ -39,3 +39,10 @@
 md-tooltip {
     height: auto;
 }
+
+.person-item.hover,
+.custom-marker.mutuelle.person-item+custom-marker.mutuelle.person-item.hover{
+    background-color : #e6e0d8;
+    border-color: #e6e0d8 transparent;
+
+}

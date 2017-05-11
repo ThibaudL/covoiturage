@@ -1,0 +1,11 @@
+i.free {
+    color: #00cb4b;
+}
+
+.person-item.hover{
+    background-color : #e6e0d8;
+}
+
+.person-list{
+    padding:0;
+}

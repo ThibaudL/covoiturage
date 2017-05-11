@@ -4,15 +4,27 @@ import UserService from "../../services/UserService";
 const template: string = `
     <div layout="row">
         <md-card flex>
-            <md-list  flex>
-                <md-list-item class="md-3-line" 
-                    ng-repeat="person in $ctrl.userService.persons track by $index">
-                    
-                    <div class="md-list-item-text" layout="row" layout-align="start center">
-                        <i class="material-icons">{{person.marker.type}}</i>
-                        <h3>
-                            &nbsp;&nbsp;{{ person.firstname }} {{person.name}} - {{person.adresse}}
-                        </p>
+            <md-list class="person-list" flex>
+                <md-list-item 
+                    class="md-3-line person-item" 
+                    ng-repeat="person in $ctrl.userService.persons track by $index"
+                    ng-class="{'hover' : person.display.hover}"
+                    ng-mouseenter="person.display.hover = true"
+                    ng-mouseleave="person.display.hover = false"
+                    >
+                    <div class="md-list-item-text" layout="row" layout-align="space-between center">
+                        <div layout="row">
+                            <i class="material-icons">{{person.marker.type}}</i>
+                            <div layout="column">
+                                <h3>
+                                    &nbsp;&nbsp;{{ person.firstname }} {{person.name}}
+                                </h3>
+                                <p>{{person.adresse}}</p>
+                            </div>
+                        </div>
+                        <div layout="row" ng-init="list = $ctrl.initSeats(person)">
+                            <i class="free material-icons" ng-repeat="it in list track by $index">event_seat</i>
+                        </div>
                     </div>
                     <md-divider ng-if="!$last"></md-divider>
                 </md-list-item>
@@ -42,6 +54,14 @@ export default class ListPersons {
         this.userService.persons.forEach((person) => {
             this.addMarker(person.marker);
         });
+    }
+
+    initSeats(person:PersonModel){
+        if(person.nbSeets > 0) {
+            return new Array(person.nbSeets);
+        }else{
+            return 0;
+        }
     }
 
     addMarker(item:any): void {

@@ -23,12 +23,44 @@ const template: string = `
               </custom-marker>
               
               <custom-marker 
-                  ng-repeat="person in $ctrl.userService.persons track by $index"
+                  ng-repeat="person in $ctrl.userService.persons | filter : {marker : {type : 'arrow_downward'}} track by $index"
+                  id="custom-marker-{{$index}}"
+                  on-click="$ctrl.map.showInfoWindow('markerInfo', 'custom-marker-'+$index)"
+                  position="{{::person.marker.geometry.coordinates}}"
+              >               
+                <div class="mutuelle person-item" >
+                  <md-tooltip>{{person.firstname}} {{person.name}} - {{person.adresse}}</md-tooltip>
+                    <i class="material-icons">{{person.marker.type}}</i>
+                </div>
+              </custom-marker>
+
+              <custom-marker ng-if="$ctrl.displayDrivees"
+                  ng-repeat="person in $ctrl.userService.persons | filter : {marker : {type : 'directions_walk'}} track by $index"
+                  id="custom-marker-{{$index}}"
+                  on-click="$ctrl.map.showInfoWindow('markerInfo', 'custom-marker-'+$index)"
+                  position="{{::person.marker.geometry.coordinates}}"
+              >                
+                <div class="mutuelle person-item"
+                  ng-class="{'hover' : person.display.hover}"
+                  ng-mouseenter="person.display.hover = true"
+                  ng-mouseleave="person.display.hover = false"
+                >
+                  <md-tooltip>{{person.firstname}} {{person.name}} - {{person.adresse}}</md-tooltip>
+                    <i class="material-icons">{{person.marker.type}}</i>
+                </div>
+              </custom-marker>
+
+              <custom-marker ng-if="$ctrl.displayDrivers" 
+                  ng-repeat="person in $ctrl.userService.persons | filter : {marker : {type : 'directions_car'}} track by $index"
                   id="custom-marker-{{$index}}"
                   on-click="$ctrl.map.showInfoWindow('markerInfo', 'custom-marker-'+$index)"
                   position="{{::person.marker.geometry.coordinates}}"
               >
-                <div class="mutuelle">
+                <div class="mutuelle person-item"
+                    ng-class="{'hover' : person.display.hover}"
+                    ng-mouseenter="person.display.hover = true"
+                    ng-mouseleave="person.display.hover = false"
+                >
                   <md-tooltip>{{person.firstname}} {{person.name}} - {{person.adresse}}</md-tooltip>
                     <i class="material-icons">{{person.marker.type}}</i>
                 </div>
@@ -39,6 +71,12 @@ const template: string = `
     <md-card layout="row" layout-align="left center" style="padding-top:15px;padding-left: 15px">
         <md-checkbox ng-model="$ctrl.displaySiege">
             Afficher siège
+        </md-checkbox>
+        <md-checkbox ng-model="$ctrl.displayDrivers">
+            Afficher conducteurs
+        </md-checkbox>
+        <md-checkbox ng-model="$ctrl.displayDrivees">
+            Afficher pietons
         </md-checkbox>
     </md-card>
 `;
@@ -53,6 +91,9 @@ export default class Map {
     };
 
     private displaySiege: boolean = true;
+    private displayDrivers: boolean = true;
+    private displayDrivees: boolean = true;
+
     private static googleMapsUrl: string = "https://maps.google.com/maps/api/js?key=" + API_KEY;
 
     private NgMap: INgMap;
